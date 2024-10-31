@@ -34,37 +34,48 @@
             maxZoom: 19,
         }).addTo(map);
 
-        // Simüle edilen uçak verileri
-        var planes = [
-            { id: 'plane1', position: [37.7749, -122.4194] }, // San Francisco
-            { id: 'plane2', position: [51.5074, -0.1278] }, // Londra
-            { id: 'plane3', position: [35.6895, 139.6917] }, // Tokyo
-            { id: 'plane4', position: [40.7128, -74.0060] }, // New York
-        ];
-
         var markers = {};
 
         // Uçakları haritaya ekle
-        planes.forEach(function(plane) {
+        function addPlaneMarker(icao24, position) {
             var marker = L.divIcon({ className: 'airplane' });
-            markers[plane.id] = L.marker(plane.position, { icon: marker }).addTo(map);
-        });
+            var planeMarker = L.marker(position, { icon: marker }).addTo(map);
+            markers[icao24] = planeMarker;
+        }
 
-        // Uçak hareket simülasyonu
-        function movePlanes() {
-            planes.forEach(function(plane) {
-                // Yeni rastgele bir konum oluştur
-                var newLat = plane.position[0] + (Math.random() - 0.5) * 0.1; // +/- 0.1 derece
-                var newLng = plane.position[1] + (Math.random() - 0.5) * 0.1; // +/- 0.1 derece
-                plane.position = [newLat, newLng];
+        // Uçakları güncelle
+        function updatePlaneMarker(icao24, position) {
+            if (markers[icao24]) {
+                markers[icao24].setLatLng(position);
+            } else {
+                addPlaneMarker(icao24, position);
+            }
+        }
 
-                // Uçak konumunu güncelle
-                markers[plane.id].setLatLng(plane.position);
+        // OpenSky API'den uçuş verilerini al
+        function fetchFlightData() {
+            $.ajax({
+                url: 'https://opensky-network.org/api/states/all',
+                method: 'GET',
+                success: function(data) {
+                    if (data && data.states) {
+                        data.states.forEach(function(state) {
+                            var icao24 = state[0]; // ICAO 24-bit adres
+                            var position = [state[6], state[5]]; // [latitude, longitude]
+
+                            updatePlaneMarker(icao24, position);
+                        });
+                    }
+                },
+                error: function(err) {
+                    console.error("Veri alırken bir hata oluştu:", err);
+                }
             });
         }
 
-        // Uçakları her 1 saniyede bir hareket ettir
-        setInterval(movePlanes, 1000);
+        // Uçuş verilerini her 5 saniyede bir al
+        setInterval(fetchFlightData, 5000);
+        fetchFlightData(); // İlk veriyi hemen al
     </script>
 </body>
 </html>
