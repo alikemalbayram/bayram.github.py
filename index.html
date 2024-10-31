@@ -78,12 +78,19 @@
     }
 
     function updateFlightTable(states) {
-        flightTableBody.innerHTML = ""; // Önceki verileri temizle
+        // Mevcut uçakların ICAO24 kodlarını almak için bir dizi oluştur
+        const existingIcao24s = Array.from(flightTableBody.getElementsByTagName('tr'))
+            .map(row => row.cells[0].textContent);
+        
         states.forEach(state => {
-            const row = flightTableBody.insertRow();
-            row.insertCell(0).textContent = state[0]; // ICAO24
-            row.insertCell(1).textContent = state[2]; // Uçak Durumu
-            row.insertCell(2).textContent = `${state[6].toFixed(5)}, ${state[5].toFixed(5)}`; // Konum (Lat, Lon)
+            const icao24 = state[0]; // ICAO24 kodu
+            // Eğer uçak daha önce eklenmemişse tabloya ekle
+            if (!existingIcao24s.includes(icao24)) {
+                const row = flightTableBody.insertRow();
+                row.insertCell(0).textContent = icao24; // ICAO24
+                row.insertCell(1).textContent = state[2]; // Uçak Durumu
+                row.insertCell(2).textContent = `${state[6].toFixed(5)}, ${state[5].toFixed(5)}`; // Konum (Lat, Lon)
+            }
         });
     }
 
