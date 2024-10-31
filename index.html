@@ -87,12 +87,15 @@
 
     <script>
         async function fetchAircraftData() {
-            const response = await fetch('https://opensky-network.org/api/states/all');
-            if (response.ok) {
+            try {
+                const response = await fetch('https://opensky-network.org/api/states/all');
+                if (!response.ok) throw new Error('API isteği başarısız oldu.');
+                
                 const data = await response.json();
                 updateAircraftTable(data.states);
-            } else {
-                console.error('API isteği başarısız oldu.');
+            } catch (error) {
+                console.error(error);
+                alert('Veri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
             }
         }
 
