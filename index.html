@@ -3,103 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uçak Takip</title>
+    <title>Uçak Durumları</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            color: #333;
             margin: 0;
             padding: 20px;
         }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
         h1 {
             text-align: center;
-            color: #4CAF50;
+            color: #333;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
         }
+
         th {
             background-color: #4CAF50;
             color: white;
         }
-        .loading {
-            text-align: center;
-            font-size: 1.2em;
-            color: #666;
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Anlık Uçak Bilgileri</h1>
+        <table id="aircraftTable">
+            <thead>
+                <tr>
+                    <th>ICAO24</th>
+                    <th>Uçuş Durumu</th>
+                    <th>Yükseklik (m)</th>
+                    <th>Hız (km/h)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Uçak bilgileri buraya eklenecek -->
+            </tbody>
+        </table>
+    </div>
 
-<h1>Anlık Uçak Takip</h1>
-<div class="loading">Yükleniyor...</div>
-<table id="flightTable">
-    <thead>
-        <tr>
-            <th>ICAO24</th>
-            <th>Uçak Durumu</th>
-            <th>Konum (Lat, Lon)</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Veriler burada görüntülenecek -->
-    </tbody>
-</table>
-
-<script>
-    const apiUrl = "https://opensky-network.org/api/states/all"; // API URL
-    const flightTableBody = document.getElementById('flightTable').getElementsByTagName('tbody')[0];
-    const loadingText = document.querySelector('.loading');
-
-    async function fetchFlights() {
-        loadingText.textContent = "Yükleniyor..."; // Yükleniyor mesajını göster
-        try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) throw new Error("Ağ hatası: " + response.statusText);
-            const data = await response.json();
-            if (data && data.states.length > 0) {
-                updateFlightTable(data.states);
-                loadingText.style.display = "none"; // Yükleniyor mesajını gizle
+    <script>
+        async function fetchAircraftData() {
+            const response = await fetch('https://opensky-network.org/api/states/all');
+            if (response.ok) {
+                const data = await response.json();
+                updateAircraftTable(data.states);
             } else {
-                loadingText.textContent = "Veri bulunamadı.";
+                console.error('API isteği başarısız oldu.');
             }
-        } catch (error) {
-            console.error("Veri çekme hatası:", error);
-            loadingText.textContent = "Veri yüklenemedi.";
         }
-    }
 
-    function updateFlightTable(states) {
-        // Mevcut uçakların ICAO24 kodlarını almak için bir dizi oluştur
-        const existingIcao24s = Array.from(flightTableBody.getElementsByTagName('tr'))
-            .map(row => row.cells[0].textContent);
-        
-        states.forEach(state => {
-            const icao24 = state[0]; // ICAO24 kodu
-            // Eğer uçak daha önce eklenmemişse tabloya ekle
-            if (!existingIcao24s.includes(icao24)) {
-                const row = flightTableBody.insertRow();
-                row.insertCell(0).textContent = icao24; // ICAO24
-                row.insertCell(1).textContent = state[2]; // Uçak Durumu
-                row.insertCell(2).textContent = `${state[6].toFixed(5)}, ${state[5].toFixed(5)}`; // Konum (Lat, Lon)
-            }
-        });
-    }
+        function updateAircraftTable(aircraftStates) {
+            const tableBody = document.querySelector('#aircraftTable tbody');
+            tableBody.innerHTML = ''; // Önceki verileri temizle
 
-    // Sayfa yüklendiğinde verileri çek
-    fetchFlights();
+            aircraftStates.forEach(aircraft => {
+                const row = document.createElement('tr');
+                const icao24Cell = document.createElement('td');
+                const flightStatusCell = document.createElement('td');
+                const altitudeCell = document.createElement('td');
+                const speedCell = document.createElement('td');
 
-    // Her 10 saniyede bir verileri güncelle
-    setInterval(fetchFlights, 10000);
-</script>
+                icao24Cell.textContent = aircraft[0]; // ICAO24 adresi
+                flightStatusCell.textContent = aircraft[8] ? 'Uçuşta' : 'Hareketsiz'; // Uçuş durumu
+                altitudeCell.textContent = aircraft[7] || 0; // Yükseklik
+                speedCell.textContent = aircraft[9] || 0; // Hız
 
+                row.appendChild(icao24Cell);
+                row.appendChild(flightStatusCell);
+                row.appendChild(altitudeCell);
+                row.appendChild(speedCell);
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Sayfa yüklendiğinde verileri al
+        window.onload = fetchAircraftData;
+    </script>
 </body>
 </html>
