@@ -39,6 +39,10 @@
                     <th>Departure Airport</th>
                     <th>Arrival Airport</th>
                     <th>Status</th>
+                    <th>Altitude (ft)</th>
+                    <th>Speed (km/h)</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Time</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,6 +65,10 @@
                     <td>${flight.departure.airport}</td> <!-- Departure Airport -->
                     <td>${flight.arrival.airport}</td> <!-- Arrival Airport -->
                     <td>${flight.flight.status}</td> <!-- Status -->
+                    <td>${flight.flight.true_altitude || 'N/A'}</td> <!-- Altitude -->
+                    <td>${flight.flight.speed || 'N/A'}</td> <!-- Speed -->
+                    <td>${new Date(flight.departure.estimated).toLocaleString()}</td> <!-- Departure Time -->
+                    <td>${new Date(flight.arrival.estimated).toLocaleString()}</td> <!-- Arrival Time -->
                 </tr>
             `;
             tableBody.append(newRow);
