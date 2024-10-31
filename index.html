@@ -62,6 +62,12 @@
         tbody tr:hover {
             background-color: #ddd;
         }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +89,7 @@
                 <!-- Uçak bilgileri buraya eklenecek -->
             </tbody>
         </table>
+        <div id="errorContainer" class="error-message"></div>
     </div>
 
     <script>
@@ -95,7 +102,7 @@
                 updateAircraftTable(data.states);
             } catch (error) {
                 console.error(error);
-                alert('Veri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
+                document.getElementById('errorContainer').innerText = 'Veri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
             }
         }
 
