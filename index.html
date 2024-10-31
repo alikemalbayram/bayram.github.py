@@ -3,71 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uçuş Bilgileri</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Dünya Haritasında Uçuşlar</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100vh;
+        }
+        .airplane {
+            width: 24px;
+            height: 24px;
+            background-image: url('https://image.shutterstock.com/image-vector/airplane-icon-vector-260nw-593223587.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Uçuş Bilgileri</h1>
-        <form id="flightForm">
-            <div class="form-group">
-                <label for="icao24">Uçak ICAO24:</label>
-                <input type="text" class="form-control" id="icao24" name="icao24" required>
-            </div>
-            <div class="form-group">
-                <label for="begin">Başlangıç Zamanı (Unix zaman damgası):</label>
-                <input type="number" class="form-control" id="begin" name="begin" required>
-            </div>
-            <div class="form-group">
-                <label for="end">Bitiş Zamanı (Unix zaman damgası):</label>
-                <input type="number" class="form-control" id="end" name="end" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Uçuş Bilgilerini Getir</button>
-        </form>
+    <div id="map"></div>
 
-        <h2 class="mt-5">Uçuşlar</h2>
-        <ul id="flightsList" class="list-group"></ul>
-    </div>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#flightForm').on('submit', function(e) {
-                e.preventDefault(); // Formun gönderimini engelle
+        // Harita oluştur
+        var map = L.map('map').setView([20, 0], 2); // 20° N, 0° E
 
-                var icao24 = $('#icao24').val();
-                var begin = $('#begin').val();
-                var end = $('#end').val();
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
 
-                // AJAX isteği gönder
-                $.ajax({
-                    url: '/flights',
-                    method: 'GET',
-                    data: {
-                        icao24: icao24,
-                        begin: begin,
-                        end: end
-                    },
-                    success: function(data) {
-                        $('#flightsList').empty(); // Önceki sonuçları temizle
-                        if (data.length > 0) {
-                            data.forEach(function(flight) {
-                                $('#flightsList').append(
-                                    `<li class="list-group-item">
-                                        Uçak ICAO24: ${flight[0]} - Başlangıç: ${flight[1]} - Bitiş: ${flight[2]}
-                                    </li>`
-                                );
-                            });
-                        } else {
-                            $('#flightsList').append('<li class="list-group-item">Uçuş bulunamadı.</li>');
-                        }
-                    },
-                    error: function() {
-                        $('#flightsList').append('<li class="list-group-item">Hata oluştu. Lütfen tekrar deneyin.</li>');
-                    }
-                });
-            });
+        // Simüle edilen uçak verileri
+        var planes = [
+            { id: 'plane1', position: [37.7749, -122.4194] }, // San Francisco
+            { id: 'plane2', position: [51.5074, -0.1278] }, // Londra
+            { id: 'plane3', position: [35.6895, 139.6917] }, // Tokyo
+            { id: 'plane4', position: [40.7128, -74.0060] }, // New York
+        ];
+
+        var markers = {};
+
+        // Uçakları haritaya ekle
+        planes.forEach(function(plane) {
+            var marker = L.divIcon({ className: 'airplane' });
+            markers[plane.id] = L.marker(plane.position, { icon: marker }).addTo(map);
         });
+
+        // Uçak hareket simülasyonu
+        function movePlanes() {
+            planes.forEach(function(plane) {
+                // Yeni rastgele bir konum oluştur
+                var newLat = plane.position[0] + (Math.random() - 0.5) * 0.1; // +/- 0.1 derece
+                var newLng = plane.position[1] + (Math.random() - 0.5) * 0.1; // +/- 0.1 derece
+                plane.position = [newLat, newLng];
+
+                // Uçak konumunu güncelle
+                markers[plane.id].setLatLng(plane.position);
+            });
+        }
+
+        // Uçakları her 1 saniyede bir hareket ettir
+        setInterval(movePlanes, 1000);
     </script>
 </body>
 </html>
