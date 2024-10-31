@@ -9,12 +9,12 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
 
         .container {
-            max-width: 100%;
-            margin: 0;
+            max-width: 800px;
+            margin: auto;
             background: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -24,18 +24,6 @@
         h1 {
             text-align: center;
             color: #333;
-        }
-
-        .search-container {
-            text-align: right;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
         }
 
         table {
@@ -58,24 +46,11 @@
         tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-
-        tbody tr:hover {
-            background-color: #ddd;
-        }
-
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Anlık Uçak Bilgileri</h1>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Uçak arayın..." onkeyup="filterTable()">
-        </div>
         <table id="aircraftTable">
             <thead>
                 <tr>
@@ -89,20 +64,16 @@
                 <!-- Uçak bilgileri buraya eklenecek -->
             </tbody>
         </table>
-        <div id="errorContainer" class="error-message"></div>
     </div>
 
     <script>
         async function fetchAircraftData() {
-            try {
-                const response = await fetch('https://opensky-network.org/api/states/all');
-                if (!response.ok) throw new Error('API isteği başarısız oldu.');
-                
+            const response = await fetch('https://opensky-network.org/api/states/all');
+            if (response.ok) {
                 const data = await response.json();
                 updateAircraftTable(data.states);
-            } catch (error) {
-                console.error(error);
-                document.getElementById('errorContainer').innerText = 'Veri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+            } else {
+                console.error('API isteği başarısız oldu.');
             }
         }
 
@@ -128,21 +99,6 @@
                 row.appendChild(speedCell);
                 tableBody.appendChild(row);
             });
-        }
-
-        function filterTable() {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toLowerCase();
-            const table = document.getElementById('aircraftTable');
-            const tr = table.getElementsByTagName('tr');
-
-            for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[0]; // ICAO24 sütununu filtrele
-                if (td) {
-                    const txtValue = td.textContent || td.innerText;
-                    tr[i].style.display = txtValue.toLowerCase().indexOf(filter) > -1 ? "" : "none";
-                }
-            }
         }
 
         // Sayfa yüklendiğinde verileri al
