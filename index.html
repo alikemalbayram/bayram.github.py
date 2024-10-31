@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dünya Haritasında Uçuşlar</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Uçuş Bilgileri</title>
     <style>
         body {
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-        #map {
-            flex: 1;
+            font-family: Arial, sans-serif;
         }
         #aircraft-list {
             overflow-y: auto;
             background-color: white;
-            border-top: 1px solid #ccc;
-            max-height: 200px; /* Tablo yüksekliği */
+            border: 1px solid #ccc;
+            max-height: 80vh; /* Tablo yüksekliği */
+            padding: 10px;
         }
         table {
             width: 100%;
@@ -33,16 +28,9 @@
         th {
             background-color: #f2f2f2;
         }
-        .airplane {
-            width: 24px;
-            height: 24px;
-            background-image: url('https://image.shutterstock.com/image-vector/airplane-icon-vector-260nw-593223587.jpg');
-            background-size: cover;
-        }
     </style>
 </head>
 <body>
-    <div id="map"></div>
     <div id="aircraft-list">
         <table id="aircraft-table">
             <thead>
@@ -59,33 +47,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Harita oluştur
-        var map = L.map('map').setView([20, 0], 2); // 20° N, 0° E
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
-
-        var markers = {};
-
-        // Uçakları haritaya ekle
-        function addPlaneMarker(icao24, position) {
-            var marker = L.divIcon({ className: 'airplane' });
-            var planeMarker = L.marker(position, { icon: marker }).addTo(map);
-            markers[icao24] = planeMarker;
-        }
-
-        // Uçakları güncelle
-        function updatePlaneMarker(icao24, position) {
-            if (markers[icao24]) {
-                markers[icao24].setLatLng(position);
-            } else {
-                addPlaneMarker(icao24, position);
-            }
-        }
-
         // Uçak listesini güncelle
         function updateAircraftList(state) {
             var tableBody = $('#aircraft-table tbody');
@@ -108,10 +70,6 @@
                     if (data && data.states) {
                         $('#aircraft-table tbody').empty(); // Önceki verileri temizle
                         data.states.forEach(function(state) {
-                            var icao24 = state[0]; // ICAO 24-bit adres
-                            var position = [state[6], state[5]]; // [latitude, longitude]
-
-                            updatePlaneMarker(icao24, position);
                             updateAircraftList(state);
                         });
                     }
