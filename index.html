@@ -43,6 +43,8 @@
                     <th>Speed (km/h)</th>
                     <th>Departure Time</th>
                     <th>Arrival Time</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +71,8 @@
                     <td>${flight.flight.speed || 'N/A'}</td> <!-- Speed -->
                     <td>${new Date(flight.departure.estimated).toLocaleString()}</td> <!-- Departure Time -->
                     <td>${new Date(flight.arrival.estimated).toLocaleString()}</td> <!-- Arrival Time -->
+                    <td>${flight.flight.latitude || 'N/A'}</td> <!-- Latitude -->
+                    <td>${flight.flight.longitude || 'N/A'}</td> <!-- Longitude -->
                 </tr>
             `;
             tableBody.append(newRow);
