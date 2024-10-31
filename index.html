@@ -57,16 +57,23 @@
 <script>
     const apiUrl = "https://opensky-network.org/api/states/all"; // API URL
     const flightTableBody = document.getElementById('flightTable').getElementsByTagName('tbody')[0];
+    const loadingText = document.querySelector('.loading');
 
     async function fetchFlights() {
+        loadingText.textContent = "Yükleniyor..."; // Yükleniyor mesajını göster
         try {
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error("Ağ hatası: " + response.statusText);
             const data = await response.json();
-            updateFlightTable(data.states);
+            if (data && data.states.length > 0) {
+                updateFlightTable(data.states);
+                loadingText.style.display = "none"; // Yükleniyor mesajını gizle
+            } else {
+                loadingText.textContent = "Veri bulunamadı.";
+            }
         } catch (error) {
             console.error("Veri çekme hatası:", error);
-            flightTableBody.innerHTML = "<tr><td colspan='3'>Veri yüklenemedi</td></tr>";
+            loadingText.textContent = "Veri yüklenemedi.";
         }
     }
 
