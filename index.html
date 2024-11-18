@@ -1,107 +1,215 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="tr">
+
 <head>
+    <title>TURAY HAVACILIK - Havacılık Şirketi</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uçuş Bilgileri</title>
+    <meta name="description" content="TURAY HAVACILIK - Profesyonel Havacılık Hizmetleri">
+    <meta name="keywords" content="TURAY HAVACILIK, Havacılık, İHA, Uçak, Havacılık Hizmetleri">
+    <meta name="author" content="TURAY HAVACILIK">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        #aircraft-list {
-            
-            overflow-y: auto;
-            background-color: white;
-            border: 1px solid #ccc;
-            max-height: 80vh; /* Tablo yüksekliği */
-            padding: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+            font: 20px Montserrat, sans-serif;
+            line-height: 1.8;
+            color: #333333;
         }
         
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        .margin {
+            margin-bottom: 45px;
         }
-        th {
-            background-color: #f2f2f2;
+        
+        .bg-1 {
+            background-color: #2a2e35;
+            color: #ffffff;
+        }
+        
+        .bg-2 {
+            background-color: #474e5d;
+            color: #ffffff;
+        }
+        
+        .bg-3 {
+            background-color: #ffffff;
+            color: #333333;
+        }
+        
+        .bg-4 {
+            background-color: #1c1f26;
+            color: #fff;
+        }
+        
+        .container-fluid {
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+        
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border: 0;
+            border-radius: 0;
+            margin-bottom: 0;
+            font-size: 12px;
+            letter-spacing: 5px;
+        }
+        
+        .navbar-nav li a:hover {
+            color: #2dde98 !important;
+        }
+        
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        #splash-logo {
+            font-size: 2.5em;
+            color: #ffffff;
+            opacity: 0;
+            text-align: center;
+            animation: fadeInText 4s ease forwards;
+        }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInContent 1s ease forwards;
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .social-icon {
+            font-size: 3em;
+            margin: 0 10px;
+            color: #fff;
         }
     </style>
 </head>
+
 <body>
-    <div id="aircraft-list">
-        <table id="aircraft-table">
-            <thead>
-                <tr>
-                    <th>Flight Number</th>
-                    <th>Departure Airport</th>
-                    <th>Arrival Airport</th>
-                    <th>Status</th>
-                    <th>Altitude (ft)</th>
-                    <th>Speed (km/h)</th>
-                    <th>Departure Time</th>
-                    <th>Arrival Time</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Uçaklar burada listelenecek -->
-            </tbody>
-        </table>
+
+    <!-- Açılış Ekranı -->
+    <div id="splash-screen">
+        <div id="splash-logo">TURAY HAVACILIK</div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default fade-in">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">TURAY HAVACILIK</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#hakkimizda">Hakkımızda</a></li>
+                    <li><a href="#hizmetler">Hizmetler</a></li>
+                    <li><a href="#iletisim">İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hakkımızda -->
+    <div id="hakkimizda" class="container-fluid bg-1 text-center fade-in">
+        <h3 class="margin">TURAY HAVACILIK'a Hoşgeldiniz</h3>
+        <p>Türkiye'nin önde gelen havacılık şirketlerinden biri olarak, insansız hava araçları (İHA) ve havacılık çözümlerinde yenilikçi teknolojiler sunuyoruz.</p>
+        <img src="img/turay-logo.jpg" class="img-responsive img-circle margin" style="display:inline" alt="TURAY HAVACILIK" width="350" height="350">
+    </div>
+
+    <!-- Hizmetlerimiz -->
+    <div id="hizmetler" class="container-fluid bg-2 text-center fade-in">
+        <h3 class="margin">Hizmetlerimiz</h3>
+        <p>İleri teknoloji ile geliştirilmiş İHA'lar, uçak tasarımları ve havacılık danışmanlık hizmetleri sunuyoruz.</p>
+        <a href="#iletisim" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-envelope"></span> Bizimle İletişime Geçin
+        </a>
+    </div>
+
+    <!-- X Paylaşımları Bölümü -->
+    <div id="xpaylasimlari" class="container-fluid bg-3 text-center fade-in">
+        <h3 class="margin">Son Paylaşımlarımız</h3>
+        <a class="twitter-timeline" href="https://x.com/TurayTec" data-tweet-limit="3">Tweets by TurayTec</a>
+    </div>
+
+    <!-- İletişim -->
+    <div id="iletisim" class="container-fluid bg-3 text-center fade-in">
+        <h3 class="margin">İletişim</h3>
+        <p>İleri teknoloji çözümlerimiz hakkında daha fazla bilgi almak ister misiniz?</p>
+        <p><span class="glyphicon glyphicon-map-marker"></span> İstanbul, TR</p>
+        <p><span class="glyphicon glyphicon-phone"></span> +90 533 561 01 82</p>
+        <p><span class="glyphicon glyphicon-envelope"></span> info@turayhavacilik.com</p>
+        <div class="embed-responsive embed-responsive-16by9 margin">
+            <iframe class="embed-responsive-item" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3111.930031530555!2d29.2589178!3d40.9690569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cad149e0d680c9%3A0x9714fa22c113f0b7!2sTuray%20Havac%C4%B1l%C4%B1k!5e0!3m2!1str!2str!4v1698584263549!5m2!1str!2str" 
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container-fluid bg-4 text-center fade-in">
+        <p>&copy; 2024 TURAY HAVACILIK</p>
+        <a href="https://www.instagram.com/turaytec/" target="_blank" class="social-icon"><i class="fa fa-instagram"></i></a>
+        <a href="https://tr.linkedin.com/company/turay-havacilik" target="_blank" class="social-icon"><i class="fa fa-linkedin"></i></a>
+        <a href="https://www.youtube.com/channel/UC8FECNhgWDKDZ954zd968xA" target="_blank" class="social-icon"><i class="fa fa-youtube"></i></a>
+        <a href="https://x.com/TurayTec" target="_blank" class="social-icon"><i class="fa fa-twitter"></i></a>
+    </footer>
+
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script>
-        const apiKey = '0905c6fa93e12e56daaccb6db90eb702'; // API anahtarınız
-        const apiUrl = 'https://api.aviationstack.com/v1/flights'; // API URL'si
-
-        // Uçak listesini güncelle
-        function updateAircraftList(flight) {
-            var tableBody = $('#aircraft-table tbody');
-            var newRow = `
-                <tr>
-                    <td>${flight.flight.iata || flight.flight.number}</td> <!-- Flight Number -->
-                    <td>${flight.departure.airport}</td> <!-- Departure Airport -->
-                    <td>${flight.arrival.airport}</td> <!-- Arrival Airport -->
-                    <td>${flight.flight.status}</td> <!-- Status -->
-                    <td>${flight.flight.true_altitude || 'N/A'}</td> <!-- Altitude -->
-                    <td>${flight.flight.speed || 'N/A'}</td> <!-- Speed -->
-                    <td>${new Date(flight.departure.estimated).toLocaleString()}</td> <!-- Departure Time -->
-                    <td>${new Date(flight.arrival.estimated).toLocaleString()}</td> <!-- Arrival Time -->
-                    <td>${flight.flight.latitude || 'N/A'}</td> <!-- Latitude -->
-                    <td>${flight.flight.longitude || 'N/A'}</td> <!-- Longitude -->
-                </tr>
-            `;
-            tableBody.append(newRow);
-        }
-        // Aviation Stack API'den uçuş verilerini al
-        function fetchFlightData() {
-            $.ajax({
-                url: `${apiUrl}?access_key=${apiKey}`,
-                method: 'GET',
-                success: function(data) {
-                    if (data && data.data) {
-                        $('#aircraft-table tbody').empty(); // Önceki verileri temizle
-                        data.data.forEach(function(flight) {
-                            updateAircraftList(flight);
-                        });
-                    }
-                },
-                
-                error: function(err) {
-                    console.error("Veri alırken bir hata oluştu:", err);
-                }
-            });
-        }
-
-        // Uçuş verilerini her 5 saniyede bir al
-        setInterval(fetchFlightData, 5000);
-        fetchFlightData(); // İlk veriyi hemen al
+        // Sayfa yüklendiğinde açılış ekranını gizleme
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                document.getElementById("splash-screen").style.opacity = "0";
+                setTimeout(function() {
+                    document.getElementById("splash-screen").style.display = "none";
+                    document.querySelectorAll('.fade-in').forEach(function(element) {
+                        element.style.animationDelay = '0.5s';
+                    });
+                }, 1000);
+            }, 4000); // 4 saniyelik bekleme
+        });
     </script>
 </body>
+
 </html>
+
