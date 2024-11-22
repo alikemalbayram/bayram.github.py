@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -18,38 +18,19 @@
         body {
             font: 20px Montserrat, sans-serif;
             line-height: 1.8;
-            color: #333333;
+            color: #ffffff;
+            background-color: #2a2e35;
         }
-        
+
         .margin {
             margin-bottom: 45px;
         }
-        
-        .bg-1 {
-            background-color: #2a2e35;
-            color: #ffffff;
-        }
-        
-        .bg-2 {
-            background-color: #474e5d;
-            color: #ffffff;
-        }
-        
-        .bg-3 {
-            background-color: #ffffff;
-            color: #333333;
-        }
-        
-        .bg-4 {
-            background-color: #1c1f26;
-            color: #fff;
-        }
-        
+
         .container-fluid {
             padding-top: 70px;
             padding-bottom: 70px;
         }
-        
+
         .navbar {
             padding-top: 15px;
             padding-bottom: 15px;
@@ -59,16 +40,16 @@
             font-size: 12px;
             letter-spacing: 5px;
         }
-        
+
         .navbar-nav li a:hover {
             color: #2dde98 !important;
         }
 
-        .dropdown-menu > li > a:hover {
+        .dropdown-menu>li>a:hover {
             background-color: #2dde98 !important;
             color: #fff !important;
         }
-        
+
         .social-icon {
             font-size: 3em;
             margin: 0 10px;
@@ -77,17 +58,35 @@
 
         .gallery {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .gallery img {
-            max-width: 300px;
-            height: auto;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 250px;
+            height: auto;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-section {
+            text-align: center;
+            background-color: #2a2e35;
+            padding: 40px 20px;
+        }
+
+        .welcome-section h3 {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 40px;
         }
     </style>
 </head>
@@ -122,12 +121,9 @@
     </nav>
 
     <!-- Hakkımızda -->
-    <div id="hakkimizda" class="container-fluid bg-1 text-center fade-in">
-        <h3 class="margin">TURAY ARGE'ye Hoşgeldiniz</h3>
+    <div id="hakkimizda" class="welcome-section">
+        <h3>TURAY ARGE'ye Hoşgeldiniz</h3>
         <p>Milli havacılık teknolojileri geliştiren bir takım olarak, insansız hava araçları (İHA) ve havacılık çözümlerinde AR-GE çalışmalarımızla önemli başarılara imza atıyoruz.</p>
-        <img src="img/turay-logo.jpg" class="img-responsive img-circle margin" style="display:inline" alt="TURAY ARGE" width="350" height="350">
-
-        <!-- Görsel Galeri -->
         <div class="gallery">
             <img src="001.jpg" alt="Görsel 1">
             <img src="0021.jpg" alt="Görsel 2">
@@ -149,16 +145,14 @@
     <!-- Destekçilerimiz -->
     <div id="destekciler" class="container-fluid bg-3 text-center fade-in">
         <h3 class="margin">Destekçilerimiz</h3>
-        <p>TURAY ARGE'nin başarılarına destek veren değerli kurumlar:</p>
-        <div class="logo-container">
-            <img src="kale.png" alt="KALE">
-            <img src="bisavunma.png" alt="BİSAVUNMA">
-            <img src="airaks.png" alt="AİRAKS">
-            <img src="çitpa.jpg" alt="ÇİTPA AŞ.">
-            <img src="petek.png" alt="PETEK YEMEK">
-            <img src="pendikbelediyesi.png" alt="PENDİK BELEDİYESİ">
-            <img src="hayatkalıp.png" alt="HAYAT KALIP">
-        </div>
+        <ul style="list-style: none; padding: 0; font-size: 1.5em;">
+            <li>KALE</li>
+            <li>BİSAVUNMA SINIR GÜVENLİK TEKNOLOJİLERİ</li>
+            <li>AİRAKS TEKNOLOJİ</li>
+            <li>ÇİTPA AŞ.</li>
+            <li>PETEK YEMEK</li>
+            <li>PENDİK BELEDİYESİ</li>
+        </ul>
     </div>
 
     <!-- İletişim -->
@@ -186,20 +180,6 @@
     </footer>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <script>
-        // Sayfa yüklendiğinde açılış ekranını gizleme
-        window.addEventListener("load", function() {
-            setTimeout(function() {
-                document.getElementById("splash-screen").style.opacity = "0";
-                setTimeout(function() {
-                    document.getElementById("splash-screen").style.display = "none";
-                    document.querySelectorAll('.fade-in').forEach(function(element) {
-                        element.style.animationDelay = '0.5s';
-                    });
-                }, 1000);
-            }, 4000); // 4 saniyelik bekleme
-        });
-    </script>
 </body>
 
 </html>
