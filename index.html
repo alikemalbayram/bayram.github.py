@@ -74,6 +74,18 @@
             margin: 0 10px;
             color: #fff;
         }
+
+        .logo-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .logo-container img {
+            max-width: 150px;
+            height: auto;
+        }
     </style>
 </head>
 
@@ -126,14 +138,14 @@
     <div id="destekciler" class="container-fluid bg-3 text-center fade-in">
         <h3 class="margin">Destekçilerimiz</h3>
         <p>TURAY ARGE'nin başarılarına destek veren değerli kurumlar:</p>
-        <ul style="list-style: none; padding: 0; font-size: 1.5em;">
-            <li>KALE</li>
-            <li>BİSAVUNMA SINIR GÜVENLİK TEKNOLOJİLERİ</li>
-            <li>AİRAKS TEKNOLOJİ</li>
-            <li>ÇİTPA AŞ.</li>
-            <li>PETEK YEMEK</li>
-            <li>PENDİK BELEDİYESİ</li>
-        </ul>
+        <div class="logo-container">
+            <img src="kale.png" alt="KALE">
+            <img src="bisavunma.png" alt="BİSAVUNMA">
+            <img src="airaks.png" alt="AİRAKS">
+            <img src="çitpa.jpg" alt="ÇİTPA AŞ.">
+            <img src="petek.png" alt="PETEK YEMEK">
+            <img src="pendikbelediyesi.png" alt="PENDİK BELEDİYESİ">
+        </div>
     </div>
 
     <!-- İletişim -->
