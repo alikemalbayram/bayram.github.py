@@ -83,8 +83,10 @@
         }
 
         .logo-container img {
-            max-width: 150px;
-            height: auto;
+            max-height: 150px; /* Logoların maksimum yüksekliğini sabit tut */
+            height: auto; /* Oranlarını koru */
+            max-width: 150px; /* Genişliklerini de sınırla */
+            object-fit: contain; /* İçeriği kesmeden sığdır */
         }
     </style>
 </head>
@@ -145,6 +147,7 @@
             <img src="çitpa.jpg" alt="ÇİTPA AŞ.">
             <img src="petek.png" alt="PETEK YEMEK">
             <img src="pendikbelediyesi.png" alt="PENDİK BELEDİYESİ">
+            <img src="hayatkalıp.png" alt="HAYAT KALIP">
         </div>
     </div>
 
