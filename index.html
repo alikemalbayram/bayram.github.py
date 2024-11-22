@@ -75,18 +75,19 @@
             color: #fff;
         }
 
-        .logo-container {
+        .gallery {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
+            margin-top: 20px;
         }
 
-        .logo-container img {
-            max-height: 150px; /* Logoların maksimum yüksekliğini sabit tut */
-            height: auto; /* Oranlarını koru */
-            max-width: 150px; /* Genişliklerini de sınırla */
-            object-fit: contain; /* İçeriği kesmeden sığdır */
+        .gallery img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -125,6 +126,15 @@
         <h3 class="margin">TURAY ARGE'ye Hoşgeldiniz</h3>
         <p>Milli havacılık teknolojileri geliştiren bir takım olarak, insansız hava araçları (İHA) ve havacılık çözümlerinde AR-GE çalışmalarımızla önemli başarılara imza atıyoruz.</p>
         <img src="img/turay-logo.jpg" class="img-responsive img-circle margin" style="display:inline" alt="TURAY ARGE" width="350" height="350">
+
+        <!-- Görsel Galeri -->
+        <div class="gallery">
+            <img src="001.jpg" alt="Görsel 1">
+            <img src="0021.jpg" alt="Görsel 2">
+            <img src="005.jpg" alt="Görsel 3">
+            <img src="006.jpg" alt="Görsel 4">
+            <img src="007.jpg" alt="Görsel 5">
+        </div>
     </div>
 
     <!-- Çalışmalarımız -->
